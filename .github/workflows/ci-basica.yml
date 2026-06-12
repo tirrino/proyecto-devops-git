@@ -1,0 +1,13 @@
+name: CI basica
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  saludo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+      - name: Mostrar mensaje inicial
+        run: echo "Primer workflow ejecutado"

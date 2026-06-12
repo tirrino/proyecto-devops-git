@@ -1,0 +1,36 @@
+name: Pipeline DevOps basica
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  validar-proyecto:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Verificar estructura del proyecto
+        run: |
+          test -f README.md
+          test -f Dockerfile
+          test -f compose.yml
+          test -d app
+      - name: Confirmar CI
+        run: echo "La validacion CI fue exitosa"
+
+  entrega-simulada:
+    needs: validar-proyecto
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Generar reporte de entrega
+        run: |
+          echo "Entrega simulada preparada" > reporte.txt
+          echo "Rama: ${{ github.ref_name }}" >> reporte.txt
+          echo "Autor: ${{ github.actor }}" >> reporte.txt
+      - name: Subir reporte
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-entrega
+          path: reporte.txt

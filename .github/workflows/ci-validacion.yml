@@ -1,0 +1,22 @@
+name: Validacion inicial
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+      - name: Listar archivos del proyecto
+        run: ls -la
+      - name: Verificar que existan archivos clave
+        run: |
+          test -f README.md
+          test -f Dockerfile
+          test -f compose.yml
+          test -d app
+      - name: Confirmar validacion
+        run: echo "Validacion basica ejecutada correctamente"

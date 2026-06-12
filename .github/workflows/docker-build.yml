@@ -1,0 +1,17 @@
+name: Build Docker image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen Docker
+        run: docker build -t app-demo:latest .
+
+      - name: Ver imagenes disponibles
+        run: docker images
